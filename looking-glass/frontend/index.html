@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Looking Glass AI - Timeline Projection System</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔮</text></svg>">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
+    <!-- Three.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .timeline-3d {
+            width: 100%;
+            height: 600px;
+            background: #0a0a0a;
+            position: relative;
+        }
+        .glass-effect {
+            background: rgba(17, 24, 39, 0.7);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+    </style>
+</head>
+<body class="bg-gray-900 text-gray-100 min-h-screen">
+    <!-- Header -->
+    <header class="bg-gray-800 border-b border-gray-700 sticky top-0 z-50">
+        <nav class="container mx-auto px-6 py-4">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center">
+                    <i class="fas fa-eye text-purple-500 text-3xl mr-3"></i>
+                    <h1 class="text-2xl font-bold text-purple-500">Looking Glass AI</h1>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <button class="bg-purple-600 hover:bg-purple-700 px-4 py-2 rounded-lg transition duration-300">
+                        <i class="fas fa-sync-alt mr-2"></i>Refresh Data
+                    </button>
+                    <button class="bg-gray-700 hover:bg-gray-600 px-4 py-2 rounded-lg transition duration-300">
+                        <i class="fas fa-cog mr-2"></i>Settings
+                    </button>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-6 py-8">
+        <!-- Control Panel -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+            <!-- Data Sources -->
+            <div class="glass-effect p-6 rounded-xl">
+                <h3 class="text-lg font-semibold mb-4 flex items-center">
+                    <i class="fas fa-database text-purple-500 mr-2"></i>
+                    Data Sources
+                </h3>
+                <div class="space-y-3">
+                    <label class="flex items-center cursor-pointer">
+                        <input type="checkbox" class="form-checkbox text-purple-500" checked>
+                        <span class="ml-2">Social Media</span>
+                    </label>
+                    <label class="flex items-center cursor-pointer">
+                        <input type="checkbox" class="form-checkbox text-purple-500" checked>
+                        <span class="ml-2">News APIs</span>
+                    </label>
+                    <label class="flex items-center cursor-pointer">
+                        <input type="checkbox" class="form-checkbox text-purple-500" checked>
+                        <span class="ml-2">Government Data</span>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Timeline Controls -->
+            <div class="glass-effect p-6 rounded-xl">
+                <h3 class="text-lg font-semibold mb-4 flex items-center">
+                    <i class="fas fa-clock text-purple-500 mr-2"></i>
+                    Timeline Controls
+                </h3>
+                <div class="space-y-4">
+                    <div>
+                        <label class="block mb-2">Projection Horizon</label>
+                        <select class="bg-gray-700 w-full p-2 rounded border border-gray-600 focus:border-purple-500 focus:ring focus:ring-purple-500 focus:ring-opacity-50">
+                            <option>30 Days</option>
+                            <option>60 Days</option>
+                            <option>90 Days</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block mb-2">Branch Count</label>
+                        <input type="range" min="1" max="5" value="3" class="w-full accent-purple-500">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Analysis Filters -->
+            <div class="glass-effect p-6 rounded-xl">
+                <h3 class="text-lg font-semibold mb-4 flex items-center">
+                    <i class="fas fa-filter text-purple-500 mr-2"></i>
+                    Analysis Filters
+                </h3>
+                <div class="space-y-3">
+                    <label class="flex items-center cursor-pointer">
+                        <input type="checkbox" class="form-checkbox text-purple-500" checked>
+                        <span class="ml-2">Geopolitical Events</span>
+                    </label>
+                    <label class="flex items-center cursor-pointer">
+                        <input type="checkbox" class="form-checkbox text-purple-500" checked>
+                        <span class="ml-2">Financial Trends</span>
+                    </label>
+                    <label class="flex items-center cursor-pointer">
+                        <input type="checkbox" class="form-checkbox text-purple-500" checked>
+                        <span class="ml-2">Technology Developments</span>
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <!-- Timeline Visualization -->
+        <div class="glass-effect rounded-xl p-6 mb-8">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-xl font-semibold flex items-center">
+                    <i class="fas fa-project-diagram text-purple-500 mr-2"></i>
+                    Timeline Projection
+                </h2>
+                <div class="flex space-x-2">
+                    <button class="bg-gray-700 hover:bg-gray-600 px-3 py-1 rounded transition duration-300">
+                        <i class="fas fa-expand-arrows-alt"></i>
+                    </button>
+                    <button class="bg-gray-700 hover:bg-gray-600 px-3 py-1 rounded transition duration-300">
+                        <i class="fas fa-download"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="timeline-3d rounded-lg" id="timeline-container"></div>
+        </div>
+
+        <!-- Analysis Panels -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+            <!-- Event Analysis -->
+            <div class="glass-effect p-6 rounded-xl">
+                <h3 class="text-lg font-semibold mb-4 flex items-center">
+                    <i class="fas fa-chart-line text-purple-500 mr-2"></i>
+                    Event Analysis
+                </h3>
+                <div class="space-y-4">
+                    <div class="bg-gray-700 p-4 rounded">
+                        <h4 class="font-medium mb-2">Key Events</h4>
+                        <ul class="space-y-2">
+                            <li class="flex items-center">
+                                <span class="w-2 h-2 bg-green-500 rounded-full mr-2"></span>
+                                AI Breakthrough Detection
+                            </li>
+                            <li class="flex items-center">
+                                <span class="w-2 h-2 bg-yellow-500 rounded-full mr-2"></span>
+                                Market Volatility Alert
+                            </li>
+                            <li class="flex items-center">
+                                <span class="w-2 h-2 bg-red-500 rounded-full mr-2"></span>
+                                Global Policy Shift
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Probability Matrix -->
+            <div class="glass-effect p-6 rounded-xl">
+                <h3 class="text-lg font-semibold mb-4 flex items-center">
+                    <i class="fas fa-percentage text-purple-500 mr-2"></i>
+                    Probability Matrix
+                </h3>
+                <div class="space-y-4">
+                    <div class="bg-gray-700 p-4 rounded">
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <h4 class="font-medium mb-2">Timeline A</h4>
+                                <div class="text-2xl font-bold text-green-500">78%</div>
+                            </div>
+                            <div>
+                                <h4 class="font-medium mb-2">Timeline B</h4>
+                                <div class="text-2xl font-bold text-yellow-500">22%</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 border-t border-gray-700 py-6">
+        <div class="container mx-auto px-6">
+            <div class="flex justify-between items-center">
+                <div class="text-sm text-gray-400">
+                    © 2023 Looking Glass AI. All rights reserved.
+                </div>
+                <div class="flex space-x-4">
+                    <a href="#" class="text-gray-400 hover:text-purple-500 transition duration-300">
+                        <i class="fab fa-github"></i>
+                    </a>
+                    <a href="#" class="text-gray-400 hover:text-purple-500 transition duration-300">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                    <a href="#" class="text-gray-400 hover:text-purple-500 transition duration-300">
+                        <i class="fab fa-linkedin"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Initialize Three.js scene
+        const container = document.getElementById('timeline-container');
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, container.clientWidth / container.clientHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer({ antialias: true });
+
+        renderer.setSize(container.clientWidth, container.clientHeight);
+        container.appendChild(renderer.domElement);
+
+        // Add ambient light
+        const ambientLight = new THREE.AmbientLight(0x404040);
+        scene.add(ambientLight);
+
+        // Add directional light
+        const directionalLight = new THREE.DirectionalLight(0xffffff, 0.5);
+        directionalLight.position.set(1, 1, 1);
+        scene.add(directionalLight);
+
+        // Camera position
+        camera.position.z = 5;
+
+        // Animation loop
+        function animate() {
+            requestAnimationFrame(animate);
+            renderer.render(scene, camera);
+        }
+        animate();
+
+        // Handle window resize
+        window.addEventListener('resize', () => {
+            const width = container.clientWidth;
+            const height = container.clientHeight;
+            
+            camera.aspect = width / height;
+            camera.updateProjectionMatrix();
+            
+            renderer.setSize(width, height);
+        });
+    </script>
+</body>
+</html>
